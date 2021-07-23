@@ -1,0 +1,10 @@
+.dropdown-list {
+  max-width: 10rem;
+  display: flex;
+}
+
+.dropdown-btn {
+  padding: 0;
+  width: 25px;
+  font-size: 12px !important;
+}

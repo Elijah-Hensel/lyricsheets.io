@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+
+.MuiAppBar-colorPrimary.user-app-bar {
+  background-color: #1a1b50 !important;
+}
+
+.user-app-bar .MuiIconButton-colorInherit {
+  color: #f9c232 !important;
+}
+
+.user-app-bar .MuiIconButton-colorPrimary {
+  color: #ffffff !important;
+}
+
+.MuiToolbar-regular {
+  -webkit-box-shadow: 0px 1px 15px -1px rgba(0, 0, 0, 0.51) !important;
+  box-shadow: 0px 1px 10px -1px rgba(0, 0, 0, 0.51) !important;
+}

@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+
+.MuiAppBar-colorPrimary {
+  background-color: #f7f7f7 !important;
+  box-shadow: none !important;
+}
+
+.MuiIconButton-colorInherit {
+  color: #1a1b50 !important;
+}
+
+.MuiIconButton-colorPrimary {
+  color: #444579 !important;
+}
+
+.MuiButton-root.lgn-btn {
+  color: #ffffff;
+  font-weight: 500;
+  background-color: #7a7bc7;
+  margin-left: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+.MuiButton-root.lgn-btn:hover {
+  background-color: #444579;
+}
+
+.MuiButton-root.rgst-btn {
+  color: #1a1b50;
+  font-weight: 500;
+  padding: 0.54rem 1rem;
+}
+
+.MuiToolbar-root {
+  justify-content: flex-end;
+}

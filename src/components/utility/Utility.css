@@ -1,0 +1,12 @@
+.note-utility-container {
+  width: 30%;
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  height: 77vh;
+  border: 1px solid #d5d3da;
+  border-radius: 10px;
+  background-color: #fdfbfb;
+}
+
+.hidden {
+  display: none;
+}

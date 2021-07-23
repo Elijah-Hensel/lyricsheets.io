@@ -1,0 +1,35 @@
+.sub-header {
+  width: 100%;
+  background-color: #f7f7f7;
+  padding: 0.5rem 0.5rem 0 0.5rem;
+  border-bottom: 0px solid #d5d3da;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+p {
+  margin: 0;
+}
+
+.todo-btn {
+  height: 1rem !important;
+  width: 1rem !important;
+  padding: 1rem !important;
+  border-radius: 90px !important;
+}
+
+.look-up-btn {
+  height: 1rem !important;
+  width: 1rem !important;
+  padding: 1rem !important;
+  border-radius: 90px !important;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+}
+
+h6 {
+  margin: 0;
+}
