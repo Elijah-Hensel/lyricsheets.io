@@ -21,16 +21,16 @@ async function createUserTodo({ userId, content, active }) {
 
 async function getAllUserTodos() {
   try {
-    const { rows: note } = await client.query(
+    const { rows: todos } = await client.query(
       `
         SELECT *
-        FROM notes_no_cat
+        FROM user_todos
       `
     );
 
-    return note;
+    return todos;
   } catch (err) {
-    console.error("Could not get all notes without categories!");
+    console.error("Could not get all user todos!");
     throw err;
   }
 }
@@ -81,4 +81,5 @@ async function getUserTodosByUserId(userId) {
 
 module.exports = {
   createUserTodo,
+  getAllUserTodos,
 };

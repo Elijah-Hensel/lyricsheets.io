@@ -8,21 +8,22 @@ import Note from "./components/note/Note";
 import Utility from "./components/utility/Utility";
 import { grabAllUsers } from "./api";
 import { grabAllNotesNoCat } from "./api";
+import { grabAllUserTodos } from "./api/user_todos";
 
 function App() {
   const [authUser, setAuthUser] = useState(true);
   const [utilityIsOpen, setUtilityIsOpen] = useState(false);
   const [todoActive, setTodoActive] = useState(false);
   const [lookUpActive, setLookUpActive] = useState(false);
-  const [grabbedUsers, setGrabbedUsers] = React.useState("");
-  const [grabbedNotesNoCat, setGrabbedNotesNoCat] = React.useState("");
+  const [grabbedUsers, setGrabbedUsers] = useState("");
+  const [grabbedNotesNoCat, setGrabbedNotesNoCat] = useState("");
+  const [grabbedUserTodos, setGrabbedUserTodos] = useState("");
   const [user, setUser] = useState();
 
   async function getAllGrabbedNotesNoCat() {
     try {
       const notes = await grabAllNotesNoCat();
       setGrabbedNotesNoCat(notes);
-      console.log(notes);
     } catch (err) {
       console.error("getAllGrabbedNotesNoCatError");
       throw err;
@@ -33,9 +34,18 @@ function App() {
     try {
       const users = await grabAllUsers();
       setGrabbedUsers(users);
-      console.log(users);
     } catch (err) {
       console.error("getAllGrabbedUsersError");
+      throw err;
+    }
+  }
+
+  async function getAllGrabbedUserTodos() {
+    try {
+      const todos = await grabAllUserTodos();
+      setGrabbedUserTodos(todos);
+    } catch (err) {
+      console.error("getAllGrabbedUserTodosError");
       throw err;
     }
   }
@@ -43,7 +53,7 @@ function App() {
   useEffect(() => {
     getAllGrabbedNotesNoCat();
     getAllGrabbedUsers();
-    console.log(grabbedNotesNoCat, grabbedUsers);
+    getAllGrabbedUserTodos();
   }, [setGrabbedNotesNoCat]);
 
   return (
