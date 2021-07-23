@@ -3,10 +3,12 @@ const bcrypt = require("bcrypt");
 const { client } = require("./index");
 const { createUser, getAllUsers } = require("./users");
 const { createNoteNoCat } = require("./notes_no_cat");
+const { createUserTodo } = require("./user_todos");
 
 async function buildTables() {
   try {
     client.query(`
+        DROP TABLE IF EXISTS user_todos;
         DROP TABLE IF EXISTS notes_with_cat;
         DROP TABLE IF EXISTS notes_categories;
         DROP TABLE IF EXISTS notes_no_cat;
@@ -58,6 +60,13 @@ async function buildTables() {
             create_date DATE NOT NULL,
             last_edit_date DATE NOT NULL
       );
+          CREATE TABLE user_todos(
+            id SERIAL PRIMARY KEY,
+            user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+            content VARCHAR(100) NOT NULL,
+            due_date DATE,
+            active BOOLEAN DEFAULT TRUE
+          )
             `);
     console.log("Finished building tables...");
   } catch (error) {
@@ -131,6 +140,36 @@ const createInitialUsers = async () => {
   }
 };
 
+const createInitialUserTodos = async () => {
+  console.log("Starting to create initial user todos...");
+  try {
+    const todosToCreate = [
+      {
+        userId: 1,
+        content: "Todo Number One",
+        active: true,
+      },
+      {
+        userId: 1,
+        content: "Todo Number Two",
+        active: true,
+      },
+      {
+        userId: 2,
+        content: "Todo Number Three (inactive)",
+        active: false,
+      },
+    ];
+    const todos = await Promise.all(todosToCreate.map(createUserTodo));
+    console.log("Todos created:");
+    console.log(todos);
+    console.log("Finished creating todos!");
+  } catch (err) {
+    console.error("There was a problem creating TODOS");
+    throw err;
+  }
+};
+
 // const createInitialGuests = async () => {
 //   console.log("Starting to create initial guests...");
 //   try {
@@ -164,6 +203,7 @@ async function rebuildDB() {
     await buildTables();
     await createInitialUsers();
     await createInitialNotesNoCat();
+    await createInitialUserTodos();
   } catch (error) {
     throw error;
   }

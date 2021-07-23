@@ -55,22 +55,52 @@ async function getUserById(userId) {
 
     delete user.password;
 
+    await attachNotesNoCatToUser(userId, user);
+    await attachTodosToUser(userId, user);
+
+    return user;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function attachNotesNoCatToUser(userId, user) {
+  try {
     const { rows: notes_no_cat } = await client.query(
       `
-      SELECT notes_no_cat.*
+    SELECT notes_no_cat.*
     FROM notes_no_cat
     INNER JOIN users ON users.id = notes_no_cat.id
     WHERE notes_no_cat.user_id = $1
-    `,
+  `,
       [userId]
     );
 
     if (notes_no_cat) {
       user.notes_no_cat = notes_no_cat;
     }
-    return user;
-  } catch (error) {
-    throw error;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function attachTodosToUser(userId, user) {
+  try {
+    const { rows: todos } = await client.query(
+      `
+    SELECT user_todos.*
+    FROM user_todos
+    INNER JOIN users ON users.id = user_todos.id
+    WHERE user_todos.user_id = $1
+  `,
+      [userId]
+    );
+
+    if (todos) {
+      user.todos = todos;
+    }
+  } catch (err) {
+    throw err;
   }
 }
 
