@@ -4,6 +4,7 @@ const { client } = require("./index");
 const { createUser, getAllUsers } = require("./users");
 const { createNoteNoCat } = require("./notes_no_cat");
 const { createUserTodo } = require("./user_todos");
+const { createNotesCategory } = require("./notes_categories");
 
 async function buildTables() {
   try {
@@ -155,9 +156,19 @@ const createInitialUserTodos = async () => {
         active: true,
       },
       {
-        userId: 2,
+        userId: 1,
         content: "Todo Number Three (inactive)",
         active: false,
+      },
+      {
+        userId: 2,
+        content: "Todo Number Four (inactive)",
+        active: false,
+      },
+      {
+        userId: 2,
+        content: "Todo Number Five",
+        active: true,
       },
     ];
     const todos = await Promise.all(todosToCreate.map(createUserTodo));
@@ -166,6 +177,43 @@ const createInitialUserTodos = async () => {
     console.log("Finished creating todos!");
   } catch (err) {
     console.error("There was a problem creating TODOS");
+    throw err;
+  }
+};
+
+const createInitialNotesCategories = async () => {
+  console.log("Starting to create initial notes categories...");
+  try {
+    const categoriesToCreate = [
+      {
+        userId: 1,
+        name: "Sad Lyrics",
+      },
+      {
+        userId: 1,
+        name: "Happy Lyrics",
+      },
+      {
+        userId: 1,
+        name: "Angry Lyrics",
+      },
+      {
+        userId: 2,
+        name: "Religious Lyrics",
+      },
+      {
+        userId: 2,
+        name: "Wedding Lyrics",
+      },
+    ];
+    const categories = await Promise.all(
+      categoriesToCreate.map(createNotesCategory)
+    );
+    console.log("Notes Categories created:");
+    console.log(categories);
+    console.log("Finished creating categories!");
+  } catch (err) {
+    console.error("There was a problem creating CATEGORIES");
     throw err;
   }
 };
@@ -204,6 +252,7 @@ async function rebuildDB() {
     await createInitialUsers();
     await createInitialNotesNoCat();
     await createInitialUserTodos();
+    await createInitialNotesCategories();
   } catch (error) {
     throw error;
   }
