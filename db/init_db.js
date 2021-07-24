@@ -5,6 +5,7 @@ const { createUser, getAllUsers } = require("./users");
 const { createNoteNoCat } = require("./notes_no_cat");
 const { createUserTodo } = require("./user_todos");
 const { createNotesCategory } = require("./notes_categories");
+const { createNoteWithCat } = require("./notes_with_cat");
 
 async function buildTables() {
   try {
@@ -59,7 +60,7 @@ async function buildTables() {
             title VARCHAR(255),
             content TEXT,
             create_date DATE NOT NULL,
-            last_edit_date DATE NOT NULL
+            last_edit_date DATE
       );
           CREATE TABLE user_todos(
             id SERIAL PRIMARY KEY,
@@ -74,31 +75,6 @@ async function buildTables() {
     throw error;
   }
 }
-
-const createInitialNotesNoCat = async () => {
-  console.log("Starting to create initial notes without category...");
-  try {
-    const notesNoCatToCreate = [
-      {
-        userId: 1,
-        title: "New Note Without Category",
-        content: "this is my note without category",
-      },
-      {
-        userId: 1,
-        title: "New Note Without Category 2",
-        content: "this is my note without category 2",
-      },
-    ];
-    const notes = await Promise.all(notesNoCatToCreate.map(createNoteNoCat));
-    console.log("Notes without category created:");
-    console.log(notes);
-    console.log("Finished creating notes without category!");
-  } catch (err) {
-    console.error("There was a problem creating notes without category");
-    throw err;
-  }
-};
 
 const createInitialUsers = async () => {
   console.log("Starting to create initial users...");
@@ -218,6 +194,68 @@ const createInitialNotesCategories = async () => {
   }
 };
 
+const createInitialNotesWithCat = async () => {
+  console.log("Starting to create initial notes with category...");
+  try {
+    const notesWithCatToCreate = [
+      {
+        catId: 1,
+        title: "New Note With Category",
+        content: "this is my note without category",
+      },
+      {
+        catId: 2,
+        title: "New Note With Category 2",
+        content: "this is my note with category 2",
+      },
+      {
+        catId: 3,
+        title: "New Note With Category 3",
+        content: "this is my note without category 3",
+      },
+      {
+        catId: 3,
+        title: "New Note With Category 4",
+        content: "this is my note with category 4",
+      },
+    ];
+    const notes = await Promise.all(
+      notesWithCatToCreate.map(createNoteWithCat)
+    );
+    console.log("Notes with category created:");
+    console.log(notes);
+    console.log("Finished creating notes with category!");
+  } catch (err) {
+    console.error("There was a problem creating notes with category");
+    throw err;
+  }
+};
+
+const createInitialNotesNoCat = async () => {
+  console.log("Starting to create initial notes without category...");
+  try {
+    const notesNoCatToCreate = [
+      {
+        userId: 1,
+        title: "New Note Without Category",
+        content: "this is my note without category",
+      },
+      {
+        userId: 1,
+        title: "New Note Without Category 2",
+        content: "this is my note without category 2",
+      },
+    ];
+    const notes = await Promise.all(notesNoCatToCreate.map(createNoteNoCat));
+    console.log("Notes without category created:");
+    console.log(notes);
+    console.log("Finished creating notes without category!");
+  } catch (err) {
+    console.error("There was a problem creating notes without category");
+    throw err;
+  }
+};
+
 // const createInitialGuests = async () => {
 //   console.log("Starting to create initial guests...");
 //   try {
@@ -253,6 +291,7 @@ async function rebuildDB() {
     await createInitialNotesNoCat();
     await createInitialUserTodos();
     await createInitialNotesCategories();
+    await createInitialNotesWithCat();
   } catch (error) {
     throw error;
   }

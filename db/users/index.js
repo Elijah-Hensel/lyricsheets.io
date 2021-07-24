@@ -1,4 +1,5 @@
 const { client } = require("../index");
+const { joinNotesOnNotesCategory } = require("../notes_categories");
 
 async function createUser({ username, password, email, name }) {
   try {
@@ -55,8 +56,9 @@ async function getUserById(userId) {
 
     delete user.password;
 
-    await attachNotesNoCatToUser(userId, user);
-    await attachTodosToUser(userId, user);
+    await joinNotesNoCatToUser(userId, user);
+    await joinTodosToUser(userId, user);
+    await joinNotesCategoriesToUser(userId, user);
 
     return user;
   } catch (error) {
@@ -64,7 +66,7 @@ async function getUserById(userId) {
   }
 }
 
-async function attachNotesNoCatToUser(userId, user) {
+async function joinNotesNoCatToUser(userId, user) {
   try {
     const { rows: notes_no_cat } = await client.query(
       `
@@ -84,7 +86,7 @@ async function attachNotesNoCatToUser(userId, user) {
   }
 }
 
-async function attachTodosToUser(userId, user) {
+async function joinTodosToUser(userId, user) {
   try {
     const { rows: todos } = await client.query(
       `
@@ -98,6 +100,28 @@ async function attachTodosToUser(userId, user) {
 
     if (todos) {
       user.todos = todos;
+    }
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function joinNotesCategoriesToUser(userId, user) {
+  try {
+    const { rows: categories } = await client.query(
+      `
+    SELECT notes_categories.*
+    FROM notes_categories
+    INNER JOIN users ON users.id = notes_categories.id
+    WHERE notes_categories.user_id = $1
+  `,
+      [userId]
+    );
+
+    console.log(categories);
+
+    if (categories) {
+      user.notes_categories = categories[0];
     }
   } catch (err) {
     throw err;
