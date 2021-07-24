@@ -37,44 +37,44 @@ async function getAllUserTodos() {
 
 async function getUserTodosById(id) {
   try {
-    const { rows: note } = await client.query(
+    const { rows: todo } = await client.query(
       `
       SELECT *
-      FROM notes_no_cat
+      FROM user_todos
       WHERE id=$1
       `,
       [id]
     );
 
-    if (!note) {
-      console.error("No note with that id exists");
+    if (!todo) {
+      console.error("No user todo with that id exists");
     }
 
-    return note;
+    return todo;
   } catch (err) {
-    console.error("Could not get Notes without category by id");
+    console.error("Could not get user todo by id");
     throw err;
   }
 }
 
 async function getUserTodosByUserId(userId) {
   try {
-    const { rows: note } = await client.query(
+    const { rows: todos } = await client.query(
       `
       SELECT *
-      FROM notes_no_cat
+      FROM user_todos
       WHERE user_id=$1
       `,
       [userId]
     );
 
-    if (!note) {
-      console.error("No note with that user id exists");
+    if (!todos) {
+      console.error("No todos with that user id exist");
     }
 
-    return note;
+    return todos;
   } catch (err) {
-    console.error("Could not get Notes without category by user id");
+    console.error("Could not get user todo by user id");
     throw err;
   }
 }
@@ -82,4 +82,6 @@ async function getUserTodosByUserId(userId) {
 module.exports = {
   createUserTodo,
   getAllUserTodos,
+  getUserTodosById,
+  getUserTodosByUserId,
 };
