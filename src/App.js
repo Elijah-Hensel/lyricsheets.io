@@ -17,8 +17,18 @@ function App() {
   const [lookUpActive, setLookUpActive] = useState(false);
   const [grabbedUsers, setGrabbedUsers] = useState("");
   const [grabbedNotesNoCat, setGrabbedNotesNoCat] = useState("");
-  const [grabbedUserTodos, setGrabbedUserTodos] = useState("");
   const [user, setUser] = useState();
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    grabAllUserTodos()
+      .then(({todos}) => {
+        setTodos(todos);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   async function getAllGrabbedNotesNoCat() {
     try {
@@ -40,20 +50,9 @@ function App() {
     }
   }
 
-  async function getAllGrabbedUserTodos() {
-    try {
-      const todos = await grabAllUserTodos();
-      setGrabbedUserTodos(todos);
-    } catch (err) {
-      console.error("getAllGrabbedUserTodosError");
-      throw err;
-    }
-  }
-
   useEffect(() => {
     getAllGrabbedNotesNoCat();
     getAllGrabbedUsers();
-    getAllGrabbedUserTodos();
   }, [setGrabbedNotesNoCat]);
 
   return (
@@ -78,6 +77,8 @@ function App() {
               setLookUpActive={setLookUpActive}
               utilityIsOpen={utilityIsOpen}
               setUtilityIsOpen={setUtilityIsOpen}
+              todos={todos}
+              setTodos={setTodos}
             />
           </div>
         </>

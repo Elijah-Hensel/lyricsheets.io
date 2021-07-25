@@ -3,23 +3,11 @@ import Todo from "../todo/Todo";
 import { Button } from "@material-ui/core";
 import CreateTwoToneIcon from "@material-ui/icons/CreateTwoTone";
 import "./TodoList.css";
-import TodoForm from "../TodoForm";
+import TodoForm from "../todo/TodoForm";
 import { grabAllUserTodos } from "../../api/user_todos";
 
-export default function TodoList() {
-  const [todoList, setToDoList] = useState([]);
-  const [todos, setTodos] = useState([]);
-
-  useEffect(() => {
-    grabAllUserTodos()
-      .then(({todos}) => {
-        setTodos(todos);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-  console.log(todos, "~~~~~~~~~~todos~~~~~~~~~~~")
+export default function TodoList({todos, setTodos}) {
+  //const [todoList, setToDoList] = useState([]);
 
   return (
     <div className="todo-list-container">
@@ -30,11 +18,10 @@ export default function TodoList() {
         </Button>
       </div>
       <div className="todo-list">
-        <TodoForm />
+        <TodoForm todos={todos} setTodos={setTodos} />
         {todos.map((todo, idx) => {
-          return <Todo key={idx} todos={todos} todo={todo} setToDoList={setToDoList}/>;
+          return <Todo key={idx} todos={todos} todo={todo} setTodos={setTodos}/>;
           })}
-        <Todo />
       </div>
     </div>
   );

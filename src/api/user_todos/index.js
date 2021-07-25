@@ -11,15 +11,11 @@ export async function grabAllUserTodos() {
 }
 
 export async function createTodo(
-  userId,
   content,
-  active
 ) {
   try {
     const { data } = await axios.post("/api/user-todos", {
-      userId,
       content,
-      active
     });
 
     return data;

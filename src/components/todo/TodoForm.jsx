@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { createTodo } from "../api/user_todos";
+import { createTodo } from "../../api/user_todos";
 import { Button, Modal, TextField } from "@material-ui/core/";
 
-const TodoForm = ({todo}) => {
+const TodoForm = ({todos, setTodos}) => {
     const [content, setContent] = useState("");
     const handleCreateTodo = async (event) => {
         try {
@@ -10,7 +10,7 @@ const TodoForm = ({todo}) => {
             const { newTodo } = await createTodo(
                 content
             );
-            setTodo((prevTodos) => {
+            setTodos((prevTodos) => {
                 return [...prevTodos, newTodo];
             });
             setContent("")
@@ -20,6 +20,7 @@ const TodoForm = ({todo}) => {
     }
 
     return <>
+      <form noValidate autoComplete="off" onSubmit={handleCreateTodo}>
         <TextField
           type="text"
           label="content"
@@ -31,6 +32,7 @@ const TodoForm = ({todo}) => {
           }}
         />
         <Button type="submit">Submit</Button>
+    </form>
     </>;
 };
 
