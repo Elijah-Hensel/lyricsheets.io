@@ -24,10 +24,9 @@ async function getAllUserTodos() {
     const { rows: todos } = await client.query(
       `
         SELECT *
-        FROM user_todos
+        FROM user_todos;
       `
     );
-
     return todos;
   } catch (err) {
     console.error("Could not get all user todos!");

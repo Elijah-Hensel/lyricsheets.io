@@ -15,23 +15,21 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Todo() {
+export default function Todo({ todo, todos }) {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
-      <CardContent className="todo-content">
-        <TodoRadio />
-        <Typography className="todo-text" color="textPrimary">
-          Complete Lyric Sheet
-        </Typography>
-      </CardContent>
-      <CardContent className="todo-content">
-        <TodoRadio />
-        <Typography className="todo-text" color="textPrimary">
-          Come up with sick word for "die"
-        </Typography>
-      </CardContent>
-    </Card>
+    <>
+      {todos && (
+        <Card className={classes.root}>
+          <CardContent className="todo-content">
+            <TodoRadio />
+            <Typography className="todo-text" color="textPrimary">
+              {todo.content}
+            </Typography>
+          </CardContent>
+        </Card>
+      )}
+    </>
   );
 }

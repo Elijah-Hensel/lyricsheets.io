@@ -23,6 +23,7 @@ export default function TodoRadio() {
   return (
     <div>
       <GreenRadio
+        type="radio"
         checked={selectedValue === "complete"}
         onChange={handleChange}
         value="complete"
