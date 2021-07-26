@@ -1,16 +1,16 @@
 const { client } = require("../index");
 
-async function createUserTodo({content}) {
+async function createUserTodo({user_id, content, active=true}) {
   try {
     const {
       rows: [todo],
     } = await client.query(
       `
-        INSERT INTO user_todos(content)
-        VALUES($1)
+        INSERT INTO user_todos(user_id, content, active)
+        VALUES($1, $2, $3)
         RETURNING *;
       `,
-      [content]
+      [user_id, content, active]
     );
     return todo;
   } catch (err) {

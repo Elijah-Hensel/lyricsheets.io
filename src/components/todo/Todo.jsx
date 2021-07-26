@@ -23,7 +23,7 @@ export default function Todo({ todo, todos }) {
       {todos && (
         <Card className={classes.root}>
           <CardContent className="todo-content">
-            <TodoRadio active={active} setActive={setActive} />
+            <TodoRadio todo={todo} todos={todos} active={active} setActive={setActive} />
             <Typography className={todo.active ? "todo-text" : "todo-inactive"} color="textPrimary">
               {todo.content}
             </Typography>
