@@ -48,20 +48,9 @@ function App() {
     }
   }
 
-  async function getAllGrabbedUserTodos() {
-    try {
-      const todos = await grabAllUserTodos();
-      setGrabbedUserTodos(todos);
-    } catch (err) {
-      console.error("getAllGrabbedUserTodosError");
-      throw err;
-    }
-  }
-
   useEffect(() => {
     getAllGrabbedNotesNoCat();
     getAllGrabbedUsers();
-    getAllGrabbedUserTodos();
   }, [setGrabbedNotesNoCat]);
 
   // If isLoggedIn is true, set the UserContext with user data
