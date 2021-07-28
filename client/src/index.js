@@ -1,8 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import '@magiclabs/ui/dist/cjs/index.css';
-import { ThemeProvider } from '@magiclabs/ui';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import "@magiclabs/ui/dist/cjs/index.css";
+import { ThemeProvider } from "@magiclabs/ui";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -10,5 +10,5 @@ ReactDOM.render(
       <App />
     </ThemeProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );

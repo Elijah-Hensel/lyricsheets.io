@@ -17,6 +17,7 @@ import { grabAllUsers } from "./api";
 import { grabAllNotesNoCat } from "./api";
 import { grabAllUserTodos } from "./api/user_todos";
 import { MailOutline } from "@material-ui/icons";
+import "./App.css";
 
 function App() {
   const [user, setUser] = useState();
@@ -69,12 +70,10 @@ function App() {
       <Switch>
         <UserContext.Provider value={[user, setUser]}>
           <NavBar />
-          <main>
-            <Route path="/" exact component={Main} />
-            <Route path="/login" component={Login} />
-            <Route path="/profile" component={Profile} />
-            <Route path="/callback" component={Callback} />
-          </main>
+          <Route path="/" exact component={Main} />
+          <Route path="/login" component={Login} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/callback" component={Callback} />
         </UserContext.Provider>
       </Switch>
     </Router>
