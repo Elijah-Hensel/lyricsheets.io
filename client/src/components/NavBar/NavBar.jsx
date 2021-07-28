@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -20,15 +21,20 @@ const useStyles = makeStyles((theme) => ({
 
 export default function IndexHeader() {
   const classes = useStyles();
+  const handleClick = (event) => {
+    window.location.href = "/login";
+  };
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
           <Button className="rgst-btn" color="inherit">
-            Register
+            <Link className="userButtons" to="/login" onClick={() => {}}>
+              Register
+            </Link>
           </Button>
-          <Button className="lgn-btn" color="primary">
+          <Button onClick={handleClick} className="lgn-btn" color="primary">
             Login
           </Button>
         </Toolbar>

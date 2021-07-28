@@ -1,5 +1,12 @@
-import "./App.css";
 import React, { useState, useEffect } from "react";
+import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
+import { magic } from "./lib/magic";
+import { UserContext } from "./lib/UserContext";
+import Home from "./components/home";
+import Login from "./components/login";
+import Profile from "./components/profile";
+import Callback from "./components/callback";
+import Layout from "./components/layout";
 import NavBar from "./components/NavBar/NavBar";
 import Main from "./components/Main/Main";
 import Header from "./components/header/Header";
@@ -9,8 +16,10 @@ import Utility from "./components/utility/Utility";
 import { grabAllUsers } from "./api";
 import { grabAllNotesNoCat } from "./api";
 import { grabAllUserTodos } from "./api/user_todos";
+import { MailOutline } from "@material-ui/icons";
 
 function App() {
+  const [user, setUser] = useState();
   const [authUser, setAuthUser] = useState(true);
   const [utilityIsOpen, setUtilityIsOpen] = useState(false);
   const [todoActive, setTodoActive] = useState(false);
@@ -18,7 +27,6 @@ function App() {
   const [grabbedUsers, setGrabbedUsers] = useState("");
   const [grabbedNotesNoCat, setGrabbedNotesNoCat] = useState("");
   const [grabbedUserTodos, setGrabbedUserTodos] = useState("");
-  const [user, setUser] = useState();
 
   async function getAllGrabbedNotesNoCat() {
     try {
@@ -56,38 +64,31 @@ function App() {
     getAllGrabbedUserTodos();
   }, [setGrabbedNotesNoCat]);
 
+  // If isLoggedIn is true, set the UserContext with user data
+  // Otherwise, set it to {user: null}
+  useEffect(() => {
+    setUser({ loading: true });
+    magic.user.isLoggedIn().then((isLoggedIn) => {
+      return isLoggedIn
+        ? magic.user.getMetadata().then((userData) => setUser(userData))
+        : setUser({ user: null });
+    });
+  }, []);
+
   return (
-    <div className="App">
-      {authUser ? (
-        <>
-          <Header
-            todoActive={todoActive}
-            setTodoActive={setTodoActive}
-            lookUpActive={lookUpActive}
-            setLookUpActive={setLookUpActive}
-            utilityIsOpen={utilityIsOpen}
-            setUtilityIsOpen={setUtilityIsOpen}
-          />
-          <div className="main-note-container">
-            <NoteAside grabbedNotesNoCat={grabbedNotesNoCat} />
-            <Note />
-            <Utility
-              todoActive={todoActive}
-              setTodoActive={setTodoActive}
-              lookUpActive={lookUpActive}
-              setLookUpActive={setLookUpActive}
-              utilityIsOpen={utilityIsOpen}
-              setUtilityIsOpen={setUtilityIsOpen}
-            />
-          </div>
-        </>
-      ) : (
-        <>
+    <Router>
+      <Switch>
+        <UserContext.Provider value={[user, setUser]}>
           <NavBar />
-          <Main />
-        </>
-      )}
-    </div>
+          <main>
+            <Route path="/" exact component={Main} />
+            <Route path="/login" component={Login} />
+            <Route path="/profile" component={Profile} />
+            <Route path="/callback" component={Callback} />
+          </main>
+        </UserContext.Provider>
+      </Switch>
+    </Router>
   );
 }
 
