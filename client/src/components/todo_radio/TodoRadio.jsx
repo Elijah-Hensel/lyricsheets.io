@@ -13,20 +13,17 @@ const GreenRadio = withStyles({
   checked: {},
 })((props) => <Radio color="default" {...props} />);
 
-export default function TodoRadio({todo, todos, active, setActive}) {
+export default function TodoRadio({active, setActive}) {
   const [selectedValue, setSelectedValue] = React.useState("");
 
-  const handleChange = (id) => {
-    // const todo = todos.find((todo) => todo.id === id);
-    // todo.active = !todo.active;
-    // setActive(false)
-    // return [...todos]
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
   };
 
   return (
     <div>
       <GreenRadio
-        checked={!todo.active} 
+        checked={selectedValue === "complete"} 
         onChange={handleChange}
         value="complete"
         name="radio-button-demo"
