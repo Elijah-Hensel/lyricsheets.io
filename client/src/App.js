@@ -9,10 +9,7 @@ import Callback from "./components/callback";
 import Layout from "./components/layout";
 import NavBar from "./components/NavBar/NavBar";
 import Main from "./components/Main/Main";
-import Header from "./components/header/Header";
-import NoteAside from "./components/note_aside/NoteAside";
-import Note from "./components/note/Note";
-import Utility from "./components/utility/Utility";
+import UserNote from "./components/user_note/UserNote";
 import { grabAllUsers } from "./api";
 import { grabAllNotesNoCat } from "./api";
 import { grabAllUserTodos } from "./api/user_todos";
@@ -73,7 +70,7 @@ function App() {
           <Route path="/" exact component={Main} />
           <Route path="/login" component={Login} />
           <Route path="/profile" component={Profile} />
-          <Route path="/callback" component={Callback} />
+          <Route path="/usernote" component={UserNote} />
         </UserContext.Provider>
       </Switch>
     </Router>

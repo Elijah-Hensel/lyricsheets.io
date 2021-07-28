@@ -1,9 +1,9 @@
-import { useState, useEffect, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
-import { magic } from '../lib/magic';
-import { UserContext } from '../lib/UserContext';
-import EmailForm from './email-form';
-import SocialLogins from './social-logins';
+import { useState, useEffect, useContext } from "react";
+import { useHistory } from "react-router-dom";
+import { magic } from "../lib/magic";
+import { UserContext } from "../lib/UserContext";
+import EmailForm from "./email-form";
+import SocialLogins from "./social-logins";
 
 const Login = () => {
   const history = useHistory();
@@ -12,7 +12,7 @@ const Login = () => {
 
   // If user is already logged in, redirect to profile page
   useEffect(() => {
-    user && user.issuer && history.push('/profile');
+    user && user.issuer && history.push("/profile");
   }, [user, history]);
 
   async function handleLoginWithEmail(email) {
@@ -22,15 +22,15 @@ const Login = () => {
       // Trigger Magic link to be sent to user
       let didToken = await magic.auth.loginWithMagicLink({
         email,
-        redirectURI: new URL('/callback', window.location.origin).href, // optional redirect back to your app after magic link is clicked
+        redirectURI: new URL("/usernote", window.location.origin).href, // optional redirect back to your app after magic link is clicked
       });
 
       // Validate didToken with server
       const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/login`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + didToken,
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + didToken,
         },
       });
 
@@ -38,7 +38,7 @@ const Login = () => {
         // Set the UserContext to the now logged in user
         let userMetadata = await magic.user.getMetadata();
         await setUser(userMetadata);
-        history.push('/profile');
+        history.push("/profile");
       }
     } catch (error) {
       setDisabled(false); // re-enable login button - user may have requested to edit their email
@@ -49,13 +49,13 @@ const Login = () => {
   async function handleLoginWithSocial(provider) {
     await magic.oauth.loginWithRedirect({
       provider,
-      redirectURI: new URL('/callback', window.location.origin).href, // required redirect to finish social login
+      redirectURI: new URL("/callback", window.location.origin).href, // required redirect to finish social login
     });
   }
 
   return (
     <>
-      <div className='login'>
+      <div className="login">
         <EmailForm disabled={disabled} onEmailSubmit={handleLoginWithEmail} />
         <SocialLogins onSubmit={handleLoginWithSocial} />
       </div>

@@ -26,11 +26,12 @@ const useStyles = makeStyles((theme) => ({
   demo: {
     marginLeft: ".5rem",
     marginTop: ".5rem",
-    maxWidth: 300,
+    maxWidth: "300px",
     backgroundColor: "#fdfbfb",
     border: "1px solid #d5d3da",
     borderRadius: "10px",
     height: "100%",
+    marginRight: "0",
   },
   title: {
     margin: theme.spacing(4, 0, 2),
